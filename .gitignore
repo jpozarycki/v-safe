@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+target*
+
+*.jar
+*.class
+
+/dashboard/node_modules/
