@@ -1,7 +1,8 @@
 // API endpoint configuration
 const API_BASE_URL = 'http://localhost:8080';
 const API_ENDPOINTS = {
-    SAVE_PASSWORD: `${API_BASE_URL}/api/password`
+    SAVE_PASSWORD: `${API_BASE_URL}/api/password`,
+    FETCH_PASSWORDS: `${API_BASE_URL}/api/password`
 };
 
 // Retry configuration
@@ -10,6 +11,10 @@ const RETRY_DELAY = 1000; // 1 second
 
 // Track ongoing requests to prevent duplicates
 const pendingRequests = new Map();
+
+// Cache configuration
+const PASSWORD_CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const passwordCache = new Map();
 
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -46,6 +51,30 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             })
             .catch(error => {
                 pendingRequests.delete(sender.tab.id);
+                sendResponse({ 
+                    success: false, 
+                    error: error.message 
+                });
+            });
+        
+        // Keep the message channel open for async response
+        return true;
+    } else if (message.type === 'FETCH_PASSWORDS') {
+        // Validate domain
+        if (!message.data?.domain) {
+            sendResponse({ 
+                success: false, 
+                error: 'Domain is required' 
+            });
+            return false;
+        }
+
+        // Handle the password fetch
+        handlePasswordFetch(message.data.domain)
+            .then(response => {
+                sendResponse(response);
+            })
+            .catch(error => {
                 sendResponse({ 
                     success: false, 
                     error: error.message 
@@ -183,5 +212,34 @@ function showNotification(message) {
         }, 3000);
     } catch (error) {
         console.error('Error showing notification:', error);
+    }
+}
+
+// Handle password fetching
+async function handlePasswordFetch(domain) {
+    try {
+        // Make API request
+        const response = await fetch(`${API_ENDPOINTS.FETCH_PASSWORDS}?domain=${encodeURIComponent(domain)}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+
+        // Handle different types of errors
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(
+                errorData.message || 
+                `API request failed with status ${response.status}`
+            );
+        }
+
+        const result = await response.json();
+        return { success: true, data: result.data };
+
+    } catch (error) {
+        console.error('Failed to fetch passwords:', error);
+        throw error;
     }
 } 

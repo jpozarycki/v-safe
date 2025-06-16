@@ -89,6 +89,5 @@ password-extension/
 1. Update manifest.json
 2. Create content.js with basic password detection
 3. Create background.js with API communication
-4. Test basic flow
-5. Add error handling and edge cases
-6. Add user feedback mechanisms 
+4. Add error handling and edge cases
+5. Add user feedback mechanisms 
