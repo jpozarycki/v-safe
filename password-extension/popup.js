@@ -9,7 +9,7 @@ async function loadPasswords() {
   document.getElementById('domain').textContent = `Domain: ${domain}`;
 
   try {
-    const res = await fetch(`http://localhost:8080/password?domain=${domain}`);
+    const res = await fetch(`http://localhost:8080/api/password?domain=${domain}`);
     const json = await res.json();
 
     const ul = document.getElementById('passwords');
