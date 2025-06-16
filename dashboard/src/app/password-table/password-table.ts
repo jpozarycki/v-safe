@@ -25,9 +25,7 @@ import {HttpClient} from "@angular/common/http";
     MatCell,
     MatIconButton,
     MatColumnDef,
-    MatHeaderRow,
     MatRow,
-    MatHeaderRowDef,
     MatRowDef,
     MatHeaderCellDef,
     MatCellDef,
@@ -38,7 +36,11 @@ import {HttpClient} from "@angular/common/http";
 })
 export class PasswordTable {
 
-  passwords: any[] = [];
+  passwords: any[] = [
+    { id: 1, domain: 'example.com', value: 'password123', show: false },
+    { id: 2, domain: 'test.com', value: 'testpass456', show: false },
+    { id: 3, domain: 'demo.com', value: 'demopass789', show: false }
+  ];
 
   constructor(private dialog: MatDialog ,private passwordService: PasswordService) {}
 

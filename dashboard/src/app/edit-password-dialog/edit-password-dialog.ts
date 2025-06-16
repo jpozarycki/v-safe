@@ -29,7 +29,7 @@ import {FormsModule} from '@angular/forms';
 export class EditPasswordDialog {
   constructor(
     public dialogRef: MatDialogRef<EditPasswordDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number, label: string, value: string }
+    @Inject(MAT_DIALOG_DATA) public data: { id: number, value: string }
   ) {}
 
   save() {
