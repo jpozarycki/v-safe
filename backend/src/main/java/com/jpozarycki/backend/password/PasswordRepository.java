@@ -1,0 +1,6 @@
+package com.jpozarycki.backend.password;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PasswordRepository extends JpaRepository<PasswordEntity, Long> {
+}
