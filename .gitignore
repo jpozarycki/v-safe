@@ -5,4 +5,42 @@ target*
 *.jar
 *.class
 
+# Dashboard Angular App - Located in /dashboard
+
+# Node modules
 /dashboard/node_modules/
+
+# Build output
+/dashboard/dist/
+/dashboard/tmp/
+/dashboard/out-tsc/
+
+# Angular cache and config
+/dashboard/.angular/cache/
+/dashboard/.angular/config.json
+
+# Environment files (adjust if you need to track some)
+# Ignores all except environment.prod.ts
+/dashboard/src/environments/*.ts
+!/dashboard/src/environments/environment.prod.ts
+
+# Coverage reports
+/dashboard/coverage/
+
+# Logs
+/dashboard/npm-debug.log*
+/dashboard/yarn-debug.log*
+/dashboard/yarn-error.log*
+/dashboard/*.log
+
+# IDE and system files
+/dashboard/.DS_Store
+/dashboard/Thumbs.db
+
+# Editor directories and files
+/dashboard/.vscode/
+/dashboard/.idea/
+/dashboard/.history/
+
+# Misc
+/dashboard/package-lock.json
