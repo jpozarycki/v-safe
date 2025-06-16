@@ -24,4 +24,8 @@ export class PasswordService {
     const params = new HttpParams().set('domain', domain);
     return this.http.get<{ data: PasswordEntry[] }>(this.apiUrl, { params });
   }
+
+  getAllPasswords(): Observable<{ data: PasswordEntry[] }> {
+    return this.http.get<{ data: PasswordEntry[] }>(this.apiUrl);
+  }
 }

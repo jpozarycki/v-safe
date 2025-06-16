@@ -45,7 +45,7 @@ export class PasswordTable {
   constructor(private dialog: MatDialog ,private passwordService: PasswordService) {}
 
   ngOnInit() {
-    this.passwordService.getPasswordsByDomain('example.com').subscribe({
+    this.passwordService.getAllPasswords().subscribe({
       next: res => this.passwords = res.data,
       error: err => console.error('Error loading passwords', err)
     });
