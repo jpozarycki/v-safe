@@ -3,7 +3,7 @@
   "name": "NeoVault Password Viewer",
   "version": "1.0",
   "description": "Lists passwords by domain from your API.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",
@@ -12,5 +12,12 @@
       "48": "icon.png",
       "128": "icon.png"
     }
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
+  "background": {
+    "service_worker": "background.js"
   }
 }
